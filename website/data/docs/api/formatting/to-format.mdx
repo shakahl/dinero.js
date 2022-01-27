@@ -9,7 +9,7 @@ Format a Dinero object with a custom transformer.
 The function takes a `transformer` function which exposes useful information to format the object.
 
 The `transformer` parameter exposes an object with the following properties:
-- `units`: the amount divided into each unit and sub-unit. It uses [`toUnits`](/docs/api/formatting/to-units) under the hood.
+- `units`: the amount divided into each unit and sub-unit.
 - `decimal`: a stringified decimal representation of the amount, in major currency units. If the currency isn't decimal and expressed with a single base, this is `undefined`.
 - `currency`: the object's currency.
 
