@@ -18,7 +18,6 @@ export function toFormat<TAmount, TOutput>(calculator: Calculator<TAmount>) {
   ) {
     const { currency, scale } = dineroObject.toJSON();
 
-    const getDecimalFn = getDecimal(dineroObject.formatter);
     const base = computeBaseFn(currency.base);
     const zero = calculator.zero();
     const ten = new Array(10).fill(null).reduce(calculator.increment, zero);
@@ -28,7 +27,13 @@ export function toFormat<TAmount, TOutput>(calculator: Calculator<TAmount>) {
     const isDecimal = !isMultiBase && isBaseTen;
 
     const units = toUnitsFn(dineroObject);
-    const decimal = isDecimal ? getDecimalFn(units, scale) : undefined;
+
+    if (!isDecimal) {
+      return transformer({ units, currency });
+    }
+
+    const getDecimalFn = getDecimal(dineroObject.formatter);
+    const decimal = getDecimalFn(units, scale);
 
     return transformer({ units, decimal, currency });
   };
